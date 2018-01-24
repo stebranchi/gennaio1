@@ -18,12 +18,26 @@ app.post('/addAstronauts', (req,res) => {
   astronauts.push({"id": id, "name" : req.body.firstName, "surname": req.body.lastName, "state": req.body.isInSpace });
   res.json({"id": id, "name" : req.body.firstName, "surname": req.body.lastName, "state": req.body.isInSpace });
   id++;
-	res.sendStatus(201);
+	res.Status(201);
 });
 
 app.get('/userall', (req,res) => {
-		res.json(astronauts);
-		res.sendStatus(200);
+    var surname = req.query.lastName;
+    if(surname == null){
+    res.json(astronauts);
+    res.Status(200);
+    }
+    else {
+      var index = astronauts.findIndex(item => {return item.surname == surname});
+      if (index != -1){
+
+      res.json(astronauts[index]);
+      res.Status(200);
+      }
+      else {
+      res.sendStatus(404);
+      }
+    }
 });
 
 app.get('/user/:id', (req,res) => {
@@ -31,7 +45,7 @@ app.get('/user/:id', (req,res) => {
 	var index = astronauts.findIndex(item => {return item.id == x});
 	if(index != -1){
 		res.json(astronauts[index]);
-		res.sendStatus(200);
+		res.Status(200);
 	}
 	else{
 		res.sendStatus(404);
