@@ -38,6 +38,21 @@ app.get('/user/:id', (req,res) => {
 	}
 });
 
+app.put('/user/:id', (req,res) => {
+	var x = req.params.id;
+	var index = astronauts.findIndex(item => {return item.id == x});
+	if(index != -1){
+
+		astronauts[index] = {"id": x, "name" : req.body.firstName, "surname": req.body.lastName, "state": req.body.isInSpace };
+		res.json(astronauts[index]);
+		res.Status(203);
+	}
+	else{
+		res.Status(404);
+	}
+});
+
+
 
 
 app.listen(port);
